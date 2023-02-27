@@ -43,11 +43,23 @@ Write your code using grouping in the chunks below to help answer the following 
 1)  How many members in the dataset favor impeachment vs. not (using the `for_impeachment` column)?
 
 ```{r}
+# METHOD 1:
 
+impeach%>% 
+  filter(for_impeachment == "YES") %>% 
+  summarise(count = n())
 
+impeach %>% 
+  filter(for_impeachment == "NO") %>% 
+  summarise(count = n())
 
+# OR METHOD 2:
 
+impeach %>% 
+  group_by(for_impeachment) %>% 
+  summarise(count = n())
 
+# There were 26 people that were not in favor of impeachment, and 209 people who were in favor of impeachment.
 
 ```
 
@@ -57,14 +69,12 @@ You'll want to ensure you do the grouping on both columns together, e.g. `group_
 
 ```{r}
 
+impeach %>% 
+  group_by(for_impeachment, gdp_above_national) %>% 
+  summarise(numberofmembers = n())
 
-
-
-
-
-
-
-
+# Of those NOT in favor of impeachment, 19 were below the GDP and 7 were above. Of those IN favor
+# of impeachment, 126 were above the GDP and 83 were below the GDP.
 
 ```
 
